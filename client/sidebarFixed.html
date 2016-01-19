@@ -1,0 +1,41 @@
+<template name="sidebarFixed">
+	<div id="custom-sidebar-fixed-wrap" class="top-margin">
+		<div class="custom-sidebar-fixed">
+			<div id="custom-sidebar">
+				<div class="custom-sidebar-header-wrap">
+					<span class="custom-sidebar-header">
+						{{#if isDocOpen}}
+							Editors
+						{{else}}
+							Home
+						{{/if}}
+					</span>
+			    </div>
+
+			    <div class="custom-sidebar-content">
+			    	{{#if isDocOpen}}
+					    <div class="custom-sidebar-content-editors">
+					    	{{> editingUsers}}
+					    </div>
+				    {{/if}}
+			    </div>
+
+		    	<div class="custom-sidebar-bottom-icon-wrap">
+		    		<div class="custom-sidebar-bottom-icon">
+			    		<a href="#" class="js-sidebar-dock-left">
+			    			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			    		</a>
+		    		</div>
+		    	</div>
+	    	</div>
+    	</div>
+	</div>
+</template>
+
+<template name="editingUsers">
+  {{#if isDocOpen}}
+	  {{#each users}}
+	    <span class="label label-success">{{firstname}}</span>
+	  {{/each}}
+  {{/if}}
+</template>

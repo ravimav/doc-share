@@ -1,0 +1,214 @@
+/* CSS declarations go here */
+
+*,a,input,input[type="checkbox"],textarea,div,span,li,ul,ol,p {outline:0;border:0;}
+html,body{
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+	outline:0;
+	border:0;
+	line-height:1.5;
+}
+/* custom classes for bootstrap */
+#custom-nav-bar {
+	width:100%;
+	border-bottom:3px solid #F1F1F1;
+	z-index:10;
+	margin:0;
+}
+
+#custom-sidebar-fixed-wrap {
+	position:fixed;
+	width:6.6%;
+	left:0;
+	top:0;
+	bottom:0;
+	overflow:hidden;
+	border-right:1px solid #E1E1E1;
+	z-index:11;
+	-webkit-transition: width 0.3s, -webkit-transform 0.3s;
+    transition: width 0.3s, transform 0.3s;
+}
+
+#custom-sidebar-fixed-wrap:hover {
+	width:15% !important;
+	z-index:11;
+	-webkit-transition: width 0.3s, -webkit-transform 0.3s;
+    transition: width 0.3s, transform 0.3s;
+}
+
+.custom-sidebar-fixed {
+	position:absolute;
+	background-color:#FFFFFF;
+	width:100%;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	z-index:11;
+}
+
+#custom-sidebar {
+	width:100%;
+	height:100%;
+	white-space:normal !important;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+.custom-sidebar-header-wrap {
+	width:100%;
+	border-top:1px solid #F1F1F1;
+	border-bottom:3px solid #F1F1F1;
+}
+
+.custom-sidebar-header {
+	width:100%;
+	padding-left:15px;
+	color:#AAA;
+	font-size:21px;
+}
+
+.custom-sidebar-content {
+	width:100%;
+	height:88%;
+	padding-left:15px;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+.custom-sidebar-bottom-icon-wrap {
+	width:100%;
+	height:5%;
+}
+
+.custom-sidebar-bottom-icon {
+	text-align:left;
+	font-size: 21px;
+	margin:auto 0;
+}
+
+.custom-sidebar-bottom-icon a {
+	color:#AAA;
+	padding-left:15px;
+}
+
+.custom-sidebar-bottom-icon a:hover{
+	color:#0a3151;
+}
+
+#custom-container {
+	margin-left:6.6%;
+	-webkit-transition: margin-left 0.3s, -webkit-transform 0.3s;
+    transition: margin-left 0.3s, transform 0.3s;
+}
+
+.custom-container-header-wrap {
+	width:100%;
+}
+
+.custom-container-header {
+	width:100%;
+	text-align:left;
+	font-size:21px;
+	border-top:1px solid #F1F1F1;
+	border-bottom:3px solid #F1F1F1;
+}
+
+.custom-container-header span {
+	margin-left:15px;
+	color:#AAA;
+}
+
+.custom-download-icon {
+	color:#AAA;
+}
+
+.custom-download-icon:hover {
+	color:#0a3151;
+}
+
+
+.custom-doc-editor {
+	width:100%;
+	height:100%;
+	overflow-y: auto;
+}
+
+.custom-row {
+   width:100%;
+}
+
+/* end custom classes */
+
+.border-red {border:1px solid red;}, .border-gray{border: 1px solid gray}
+.color-gray {color:#CCC;}
+
+.font-italic {font-style:italic;}, .font-bold{font-style:bold;}, .font-normal{font-style: normal}
+.font-11x{font-size: 11px;}, .font-12x{font-size: 12px;}, .font-15x{font-size: 15px;}, .font-21x{font-size: 21px;}
+.custom-checkbox {display:inline-block;}
+
+.private-doc{background-color:#AAA;}
+.public-doc{}
+
+.top-margin{
+	margin-top:52px;
+}
+
+#viewer {
+	border:1px solid #CCC;
+	resize:both;
+	width:100%;
+}
+
+#editor {
+	width:100%;
+	height:100%;
+}
+
+/* navbar */
+.brand {
+	color:#AAA;
+	font-weight:600;
+}
+
+/* navbar => collapse => doc-title*/
+.doc-title {
+	outline:none;
+	width:100%;
+	font-size:15px;
+	background-color:#F1F1F1;
+	padding:6px 10px 6px;
+	border:2px solid #CCC;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	white-space:normal !important;
+	word-wrap:break-word;
+}
+/* end navbar */
+
+/* grid container */
+.grid-square-box{
+	position: relative;
+	background-color: #F9F9F9;
+	height: 150px;
+	margin: 3px;
+	border:2px solid #F1F1F1;
+	white-space:normal !important;
+	word-wrap:break-word;
+
+}
+
+.grid-square-box:hover {
+	border: 3px solid #FFF;
+	box-shadow: 0px 3px 9px rgba(0,0,0,0.3);
+}
+
+.bottom-right-in-grid {
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	margin-right:3px;
+}
+/* end grid container */

@@ -1,0 +1,17 @@
+<template name="docItem">
+    <div id="custom-container" class="top-margin">
+      <div class="container-fluid">
+        <div class="row">
+          {{> editor}}
+        </div>
+      </div>
+    </div><!-- end of docItem container -->
+
+</template>
+
+<template name="editor">
+    <div class="custom-doc-editor">
+      {{> sharejsCM docid=docid onRender=config id="editor"}}
+    </div>
+</template>
+
