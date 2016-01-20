@@ -302,17 +302,6 @@ Template.sidebarFixed.helpers({
 //////////
 
 Template.navbar.events({
-  // change on input of doc title
-  "change .input-add-doc-title":function(event){
-      event.preventDefault();
-
-      var new_doc_modal = $("#modal-new-doc");
-      var input_error = $(".input-error");
-      var input_modal = input_error.next();
-
-      console.log(input_modal.val());
-
-  },
   // add doc
   "click .js-add-doc":function(event){
     event.preventDefault();
@@ -345,13 +334,13 @@ Template.navbar.events({
         if (!err){// all good
           console.log("event callback received id: "+res);
           Session.set("docid", res); 
-
-          //close modal
-          new_doc_modal.modal("hide");
-          input_title.val("New Document");
-          input_error.html('');      
         }
       });
+
+      //close modal
+      new_doc_modal.modal("hide");
+      input_title.val("New Document");
+      input_error.html('');   
     }
   },
   // delete doc button
@@ -359,6 +348,30 @@ Template.navbar.events({
     event.preventDefault();
     console.log("deleting...");
     // delete code here
+
+    if (!Meteor.user()){// user not available
+        alert("You need to login first!");
+    } else {
+        var new_doc_modal = $("#modal-delete-doc");
+        var docid = Session.get("docid");
+        
+        if(docid) {
+          Meteor.call("deleteDoc",docid, function(err, res){
+            if (!err){// all good
+              console.log("deleted");
+              Session.set("docid", "");
+              
+
+            } else {
+              console.log("Not deleted");
+            }
+
+          });
+        }
+
+        new_doc_modal.modal("hide");
+        Router.go('/'+Meteor.user().username);
+    }
     
   },
   // download doc button

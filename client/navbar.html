@@ -19,7 +19,7 @@
               {{#if isCreatedByCurrentUser}}
                 {{#if isDocOpen}}
                   <li>
-                    <a href="#" class="js-delete-doc">
+                    <a href="#" data-toggle="modal" data-target="#modal-delete-doc">
                       <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                       <span>Delete</span>
                     </a> 
@@ -42,17 +42,12 @@
               <span class="caret"></span>
               </a>
 
-              <ul class="dropdown-menu" style="max-width:150px;">
+              <ul class="dropdown-menu" style="max-width:300px;min-height:10px;max-height:600px;overflow-y:auto;">
                 {{#each documents}}
-                  <li class="" style="overflow:hidden;">
+                  <li class="" style="overflow-x:hidden;">
                     <a href="/{{createdBy}}/doc/{{_id}}">
                       {{title}}
                     </a>
-                    <div class="collapse" id="collapseExample">
-                      <div class="well">
-                           {{> docMeta}}
-                      </div>
-                    </div>
                   </li>
                 {{/each}}
               </ul>
@@ -76,6 +71,11 @@
                   <a data-toggle="collapse" href="#collapseTitle" aria-expanded="false" aria-controls="collapseTitle">
                     {{title}}
                   </a>
+                  <div class="collapse" id="collapseTitle">
+                    <div class="well">
+                         {{> docMeta}}
+                    </div>
+                  </div>
                 </li>
              
               <!--{{/with}}-->
@@ -108,6 +108,22 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary js-add-doc">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal -->
+  <!-- Delete confirm modal -->
+  <div class="modal fade" id="modal-delete-doc" tabindex="-1" role="dialog" aria-labelledby="modal-label-create">
+    <div class="modal-dialog">
+      <div class="modal-content panel-warning">
+        <div class="modal-body">
+          <span class="color-gray">Are you sure want to delete this document?</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger js-delete-doc">Yes</button>
         </div>
       </div>
     </div>

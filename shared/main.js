@@ -7,15 +7,26 @@ Meteor.methods({
     var doc, username = Meteor.user().username;
     if (!this.userId){// not logged in
       return;
-    }
-    else {
+    } else {
       doc = {owner:this.userId, createdOn:new Date(), 
             title:title, createdBy: username, isPrivate:true,};
       var id = Documents.insert(doc);
       console.log("addDoc method: got an id "+id);
       return id;
     }
-  }, 
+  },
+  deleteDoc: function(docid){
+    var username = Meteor.user().username;
+    if (!this.userId){// not logged in
+      return;
+    } else {
+      var isRemoved = Documents.remove({_id:docid});
+      if(!isRemoved)
+        return false;
+      console.log("deleted");
+    }
+    return true;
+  },
   // changing doc privacy settings
   updateDocPrivacy:function(doc){
     console.log("updateDocPrivacy method");
