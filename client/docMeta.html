@@ -1,0 +1,30 @@
+<template name="docMeta"> 
+  {{#with document}}
+      <!--
+      <div class="doc-title" role="button" title="click to edit title">
+        {{> editableText collection="documents" field="title"}}
+      </div>
+      {{#if canEdit}}
+        <div class="checkbox">
+            <label>
+              <input type="checkbox" class="js-tog-private" checked="{{isPrivate}}">
+              Private
+            </label>
+        </div>
+      {{/if}}
+      -->
+      <div class="custom-container-header-wrap">
+        <div class="custom-container-header">
+          <span class="content">{{> editableText collection="documents" field="title"}}</span>
+          <span class="settings">
+            {{#if canEdit}}
+              <input type="checkbox" class="js-tog-private" checked="{{isPrivate}}">
+              <span>Private</span>
+            {{/if}}
+          </span>
+        </div>
+
+      </div>
+
+  {{/with}}
+</template>

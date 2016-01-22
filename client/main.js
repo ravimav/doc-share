@@ -18,7 +18,7 @@ $(function() {
 
   //codemirror initialization
   _codemirror_width = "100%";
-  _codemirror_height = "900px";
+  _codemirror_height = "auto";
 
   // is sidebar docked before before refreshing
   if(!ls.has("isDock")) {
@@ -28,131 +28,6 @@ $(function() {
   
 });
 
-
-/////////
-///ROUTING
-////////
-
-// set up the iron router
-Router.configure({
-  layoutTemplate: 'ApplicationLayout',
-});
-
-// applying plugins by iron router
-Router.plugin('dataNotFound', {
-  notFoundTemplate: 'notFound', 
-  except: ['homepage.show']
-});
-
-// 'home' page
-Router.route('/', {
-  name:'homepage.show',
-  path: '/',
-  yieldRegions: {
-    'navbar': {to: 'header'},
-    'sidebarFixed': {to: 'sidebar'},
-    'docList':{to: 'main'}
-  },
-  onBeforeAction: function () {
-    Session.set("isDocOpen", false);
-    this.next();
-  },
-  action: function () {
-    this.render();
-    
-    console.log("you hit / ");
-  }
-});
-
-//empty-1
-Router.route('/:createdBy/doc/',{
-  name: '404_1',
-  action: function(){
-    this.redirect('/');
-  }
-});
-
-//empty-2
-Router.route('//',{
-  name: '404_2',
-  action: function(){
-    this.redirect('/');
-  }
-});
-
-// individual document page
-Router.route('/:createdBy/doc/:_id', {
-  name: 'document.show',
-  path: '/:createdBy/doc/:_id',
-  yieldRegions: {
-    'navbar': {to: 'header'},
-    'sidebarFixed': {to: 'sidebar'},
-    'docItem':{to: 'main'}
-  },
-  data: function () {
-    return Documents.findOne({_id: this.params._id});
-  },
-  onBeforeAction: function () {
-    Session.set("isDocOpen", true);
-    Session.set("docid", this.params._id);
-    this.next();
-  },
-  action: function () {
-    this.render();
-    
-    console.log("you hit /doc/id  "+this.params._id);
-
-    // is sidebar docked before before refreshing
-    if(!ls.has("isDock")) {
-      ls.set("isDock", false);
-      console.log("isDock => not set available");
-    } else {
-      
-      if(!isDock) return; // if not set previously, just return
-
-      var isDock = ls.get("isDock");
-      console.log("available");
-      console.log("set:"+isDock);
-      $(window).load(function () {
-        dockSideBar(!isDock);  // function defined in events.js
-      });
-    }
-  }
-});
-
-// list of docs under current user
-Router.route('/:createdBy', {
-  name: 'user.show',
-  path: '/:createdBy',
-  yieldRegions: {
-    'navbar': {to: 'header'},
-    'sidebarFixed': {to: 'sidebar'},
-    'docListPrivate':{to: 'main'}
-  },
-  onBeforeAction: function () {
-    Session.set("isDocOpen", false);
-    this.next();
-  },
-  action: function () {
-    this.render();
-    
-    console.log("you hit /user  "+this.params._id);
-
-    // is sidebar docked before before refreshing
-    if(!ls.has("isDock")) {
-      ls.set("isDock", false);
-      console.log("isDock => not set available");
-    } else {
-      var isDock = ls.get("isDock");
-      console.log("available");
-      console.log("set:"+isDock);
-      $(window).load(function () {
-        dockSideBar(!isDock); // function defined in events.js
-      });
-    }
-  }
-
-});
 
 //////////
 ///HELPERS
@@ -185,15 +60,16 @@ Template.editor.helpers({
   }, 
 });
 
-
 //editing users
 Template.editingUsers.helpers({
   // retrieve a list of users
   users:function(){
     var doc, eusers, users;
-    doc = Documents.findOne({_id:Session.get("docid")});
+    //doc = Documents.findOne({_id:Session.get("docid")});
+    doc = findOne(Documents, {_id:Session.get("docid")});
     if (!doc){return;}// give up
-    eusers = EditingUsers.findOne({docid:doc._id});
+    //eusers = EditingUsers.findOne({docid:doc._id});
+    eusers = findOne(EditingUsers, {docid:doc._id});
     if (!eusers){return;}// give up
     users = new Array();
     var i = 0;
@@ -214,11 +90,13 @@ Template.navbar.helpers({
   // retrieve a list of documents
   documents:function(){
     var username = Meteor.user().username;
-    return Documents.find({createdBy:username});
+    //return Documents.find({createdBy:username});
+    return findAll(Documents, {createdBy:username});
   },
   // get doc meta
   document: function(){
-    return Documents.findOne({_id:Session.get("docid")});
+    //return Documents.findOne({_id:Session.get("docid")});
+    return findOne(Documents, {_id:Session.get("docid")});
   },
   //check 
   isCreatedByCurrentUser: function() {
@@ -229,7 +107,8 @@ Template.navbar.helpers({
       return doc.createdBy == curUser;
     }
    
-    doc = Documents.findOne({_id:Session.get("docid"),createdBy:curUser});
+    //doc = Documents.findOne({_id:Session.get("docid"),createdBy:curUser});
+    doc = findOne(Documents, {_id:Session.get("docid"),createdBy:curUser});
     return doc.createdBy == curUser;
   },
   // is doc open
@@ -242,12 +121,11 @@ Template.navbar.helpers({
 Template.docMeta.helpers({
   // find current document
   document:function(){
-    return Documents.findOne({_id:Session.get("docid")});
+    return findOne(Documents, {_id:Session.get("docid")});
   }, 
   // test if a user is allowed to edit current doc's title/privacy
   canEdit:function(){
-    var doc;
-    doc = Documents.findOne({_id:Session.get("docid")});
+    var doc = findOne(Documents, {_id:Session.get("docid")},);
     if (doc){
       if (doc.owner == Meteor.userId()){
         return true;
@@ -261,7 +139,8 @@ Template.editableText.helpers({
     // test if a user is allowed to edit title of current doc
   userCanEdit : function(doc,Collection) {
     // can edit if the current doc is owned by me.
-    doc = Documents.findOne({_id:Session.get("docid"), owner:Meteor.userId()});
+    //doc = Documents.findOne({_id:Session.get("docid"), owner:Meteor.userId()});
+    doc = findOne(Documents, {_id:Session.get("docid"), owner:Meteor.userId()});
     if (doc){
       return true;
     }
@@ -275,7 +154,8 @@ Template.editableText.helpers({
 Template.docList.helpers({
   // find all public docs
   documents:function(){
-    return Documents.find({isPrivate:false});
+    //return Documents.find({isPrivate:false});
+    return findAll(Documents, {isPrivate:false});
   }
 })
 
@@ -283,7 +163,8 @@ Template.docList.helpers({
 Template.docListPrivate.helpers({
   // find all public/private docs under current user
   documents:function(){
-    return Documents.find({createdBy:Meteor.user().username});
+    //return Documents.find({createdBy:Meteor.user().username});
+    return findAll(Documents, {createdBy:Meteor.user().username});
   }
 })
 
@@ -483,14 +364,14 @@ function dockSideBar(isDock){
      _sidebar = $("#custom-sidebar-fixed-wrap");
     }
 
-    var replaceGlyphicon = _sidebar.find(".glyphicon");
+    var replaceGlyphicon = _sidebar.find(".glyphicon-chevron-right") || _sidebar.find(".glyphicon-chevron-left");
     
     if(isDock) {
       // already docked, remove it
       console.log("undocking...");
       replaceClass(replaceGlyphicon, "glyphicon-chevron-left", "glyphicon-chevron-right");
-      setStyle(_sidebar,{"width":"6.6%"});
-      setStyle(_container,{"margin-left":"6.6%"});
+      setStyle(_sidebar,{"width":"42px"});
+      setStyle(_container,{"margin-left":"42px"});
 
       //Session.set("isDock",false);
       ls.set("isDock",false);
@@ -605,3 +486,82 @@ var ls = {
     }
   }
 };
+
+// collections helpers
+
+/** find all query
+ **
+ ** @param <collection> => collection name
+ ** @param <query> => selection criteria to find
+ ** @return <json array>
+ **
+ **/
+function findAll(collection, query){
+  if(!collection) return;
+  if(!query) query = {};
+  if('object' != typeof query) return;
+
+  try{
+    var resultSet = collection.find(query);
+    return resultSet;
+  } catch(e){console.log(e);}
+}
+
+
+/** find one query
+ **
+ ** @param <collection> => collection name
+ ** @param <query> => selection criteria to find
+ ** @return <json object>
+ **
+ **/
+function findOne(collection, query){
+  if(!collection) return;
+  if(!query || 'object' != typeof query) return;
+
+  try{
+    var resultSet = collection.findOne(query);
+    return resultSet;
+  } catch(e){console.log(e);}
+}
+
+/** remove all query
+ **
+ ** @param <collection> => collection name
+ ** @param <query> => selection criteria to remove
+ ** @return <boolean>
+ **
+ **/
+function removeAll(collection, query){
+  if(!collection) return;
+  if(!query) query = {};
+  if('object' != typeof query) return;
+
+  try{
+    var isRemoved = collection.remove(query);
+    if(isRemoved)
+      return true;
+
+    return false;
+  } catch(e){console.log(e);}
+}
+
+/** remove one query
+ **
+ ** @param <collection> => collection name
+ ** @param <query> => selection criteria to remove
+ ** @return <boolean>
+ **
+ **/
+function removeOne(collection, query){
+  if(!collection) return;
+  if(!query || 'object' != typeof query) return;
+
+  try{
+    var isRemoved = collection.remove(query);
+    if(isRemoved)
+      return true;
+
+    return false;
+  } catch(e){console.log(e);}
+}

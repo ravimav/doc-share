@@ -1,6 +1,7 @@
 /* CSS declarations go here */
 
 *,a,input,input[type="checkbox"],textarea,div,span,li,ul,ol,p {outline:0;border:0;}
+
 html,body{
 	width:100%;
 	height:100%;
@@ -11,6 +12,7 @@ html,body{
 	line-height:1.5;
 }
 /* custom classes for bootstrap */
+
 #custom-nav-bar {
 	width:100%;
 	border-bottom:3px solid #F1F1F1;
@@ -20,7 +22,7 @@ html,body{
 
 #custom-sidebar-fixed-wrap {
 	position:fixed;
-	width:6.6%;
+	width:42px;
 	left:0;
 	top:0;
 	bottom:0;
@@ -46,34 +48,37 @@ html,body{
 	left:0;
 	bottom:0;
 	right:0;
-	z-index:11;
 }
 
 #custom-sidebar {
 	width:100%;
 	height:100%;
 	white-space:normal !important;
-	overflow-x:hidden;
-	overflow-y:auto;
+	overflow: hidden;
 }
 
 .custom-sidebar-header-wrap {
+	display:inline-block;
 	width:100%;
+	height:42px;
 	border-top:1px solid #F1F1F1;
 	border-bottom:3px solid #F1F1F1;
+	overflow: hidden;
+	vertical-align:middle;
 }
 
 .custom-sidebar-header {
+	display:inline-block;
 	width:100%;
-	padding-left:15px;
 	color:#AAA;
+	padding:3px 0px 3px 6px;
 	font-size:21px;
 }
 
 .custom-sidebar-content {
 	width:100%;
 	height:88%;
-	padding-left:15px;
+	padding:0px 5px;
 	overflow-x:hidden;
 	overflow-y:auto;
 }
@@ -91,7 +96,6 @@ html,body{
 
 .custom-sidebar-bottom-icon a {
 	color:#AAA;
-	padding-left:15px;
 }
 
 .custom-sidebar-bottom-icon a:hover{
@@ -99,7 +103,7 @@ html,body{
 }
 
 #custom-container {
-	margin-left:6.6%;
+	margin-left:42px;
 	-webkit-transition: margin-left 0.3s, -webkit-transform 0.3s;
     transition: margin-left 0.3s, transform 0.3s;
 }
@@ -110,15 +114,39 @@ html,body{
 
 .custom-container-header {
 	width:100%;
-	text-align:left;
+	height:42px;
 	font-size:21px;
 	border-top:1px solid #F1F1F1;
 	border-bottom:3px solid #F1F1F1;
+	overflow:hidden;
 }
 
-.custom-container-header span {
-	margin-left:15px;
+.custom-container-header .content {
+	width:80%;
+	display:inline-block;
+	text-align:left;
+	padding:3px 18px;
+	vertical-align:middle;
 	color:#AAA;
+	overflow:hidden;
+}
+
+.custom-container-header .content input[type="text"] {
+	width:100%;
+	padding:0 10px;
+	border:1px solid #CCC;
+	overflow:hidden;
+}
+
+.custom-container-header .settings {
+	max-width:15%;
+	display:inline-block;
+	float: right;
+	text-align:right;
+	padding:3px 18px;
+	vertical-align:middle;
+	color:#AAA;
+	overflow:hidden;
 }
 
 .custom-download-icon {
@@ -183,32 +211,43 @@ html,body{
 	border:2px solid #CCC;
 	-webkit-border-radius:3px;
 	border-radius:3px;
-	white-space:normal !important;
-	word-wrap:break-word;
+	overflow:hidden;
 }
+
 /* end navbar */
 
 /* grid container */
+
 .grid-square-box{
-	position: relative;
+	position:relative;
 	background-color: #F9F9F9;
-	height: 150px;
+	width:100%;
+	height: 100px;
 	margin: 3px;
 	border:2px solid #F1F1F1;
 	white-space:normal !important;
 	word-wrap:break-word;
+	overflow:hidden;
+}
 
+.grid-title{
+	position:absolute;
+	max-width:210px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	overflow: hidden;
 }
 
 .grid-square-box:hover {
-	border: 3px solid #FFF;
-	box-shadow: 0px 3px 9px rgba(0,0,0,0.3);
+	border:3px solid #FFF;
+	box-shadow:0px 3px 9px rgba(0,0,0,0.3);
 }
 
 .bottom-right-in-grid {
 	position:absolute;
 	bottom:0px;
 	right:0px;
-	margin-right:3px;
+	margin:3px 10px;
 }
 /* end grid container */
