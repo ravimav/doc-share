@@ -1,25 +1,25 @@
 <template name="docListPrivate">
-	<div id="custom-container" class="top-margin">
+  <div id="custom-container" class="top-margin">
     <div class="custom-container-header-wrap">
       <div class="custom-container-header">
         <span class="content">Your Documents</span>
       </div>
     </div>
     <div class="container-fluid">
-  		<div class="row">
-    		{{#each documents}}
-      		<div class="col-md-3 col-xs-6">
+      <div class="row">
+        {{#each documents}}
+          <div class="col-md-3 col-xs-6">
             <a href="/{{createdBy}}/doc/{{_id}}" >
-        			<div class="grid-square-box">
-        				<div class="text-center grid-title">{{title}}</div>
+              <div class="grid-square-box">
+                <div class="text-center grid-title">{{title}}</div>
                 <div class="bottom-right-in-grid" align="right">
                   <span class="color-gray font-italic font-12x">{{createdBy}}</span>
                 </div>
-        			</div>
+              </div>
             </a>
-        	</div>
-    		{{/each}}
-    	</div>
+          </div>
+        {{/each}}
+      </div>
     </div>
-	</div>
+  </div>
 </template>
